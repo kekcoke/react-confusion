@@ -3,9 +3,19 @@ import { Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 
 class DishDetail extends Component {
 
+    componentDidMount() {
+        console.log('DishDetail cpt componentDidMount invoked');
+    }
+
+    componentDidUpdate() {
+        console.log('DishDetail cpt componentDidUpdate invoked');
+    }
+
     formatCommentDate = (timestamp) => new Date(timestamp).toLocaleDateString('en-CA', { year: 'numeric', month: 'short', day: 'numeric'}); 
 
     render() {
+        console.log('DishDetail cpt render invoked');
+
         if (!!this.props.dish) {
             return (
                 <div className="row">

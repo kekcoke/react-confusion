@@ -4,6 +4,11 @@ import { Card, CardImg, CardTitle, CardImgOverlay } from 'reactstrap';
 class Menu extends Component {
     constructor(props) {
       super(props);
+      console.log('Menu cpt ctc invoked');
+    }
+
+    componentDidMount() {
+      console.log('Menu cpt componentDidMount invoked');
     }
 
     onDishSelect(dish) {
@@ -11,6 +16,8 @@ class Menu extends Component {
     }
 
     render() {
+      console.log('Menu cpt render invoked');
+
       const menu = this.props.dishes.map((dish) => {
           return (
             <div key={dish.id} className="col-12 col-md-5 m-1">
