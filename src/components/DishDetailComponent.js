@@ -17,7 +17,7 @@ function RenderDish({dish}) {
 }
 const formatCommentDate = (timestamp) => new Date(timestamp).toLocaleDateString('en-CA', { year: 'numeric', month: 'short', day: 'numeric'}); 
 
-const RenderComments = ({comments}) => {
+const RenderComments = ({comments, addComment, dishId}) => {
     if (!comments || comments.length === 0) {
         return(<div></div>);
     }
@@ -37,6 +37,7 @@ const RenderComments = ({comments}) => {
             <ul className="list-unstyled">
                 { renderComments }
             </ul>
+            <CommentForm dishId={dishId} addComment={addComment} />
         </div>
     );
 }
@@ -61,8 +62,10 @@ const DishDetail = (props) => {
                         <RenderDish dish={props.dish} />
                     </div>
                     <div className="col-12 col-md-5 m-1">
-                        <RenderComments comments={props.comments} />
-                        <CommentForm />
+                        <RenderComments comments={props.comments} 
+                            addComment={props.addComment}
+                            dishId={props.dish.id}
+                        />
                     </div>
                 </div>
                 </div>
