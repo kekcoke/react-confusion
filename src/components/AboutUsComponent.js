@@ -1,36 +1,66 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
+import { Stagger, Fade } from "react-animation-components";
 
 function RenderLeader({leader}) {
     return(
-        <div className="row" key={leader.id}>
-            <Media tag="li">
-                <div className="col-12 col-sm-2">
-                    <Media left middle>
-                        <Media object src={leader.image} alt={leader.abbr} />
+                <div className="row" key={leader.id}>
+                    <Media tag="li">
+                        <div className="col-12 col-sm-2">
+                            <Media left middle>
+                                <Media object src={baseUrl + leader.image} alt={leader.abbr} />
+                            </Media>
+                        </div>
+                        <div className='col-12 col-sm my-3'>
+                            <Media body>
+                                <h3><strong>{leader.name}</strong></h3>
+                                <p className="my-2">{leader.designation}</p>
+                                <p>{leader.description}</p>
+                            </Media>
+                        </div>
                     </Media>
                 </div>
-                <div className='col-12 col-sm my-3'>
-                    <Media body>
-                        <h3><strong>{leader.name}</strong></h3>
-                        <p className="my-2">{leader.designation}</p>
-                        <p>{leader.description}</p>
-                    </Media>
-                </div>
-            </Media>
-        </div>
     );
 }
 
 function About(props) {
 
-    const leaders = props.leaders.map((leader) => {
+    const leaders = props.leaders.leaders.map((leader) => {
         return (
-            <RenderLeader leader={leader} />
+            <React.Fragment>
+                <Stagger in>
+                    <Fade in>
+                        <RenderLeader leader={leader} />
+                    </Fade>
+                </Stagger>
+            </React.Fragment>
         );
     });
 
+    if(props.leaders.isLoading) {
+        return(
+            <div className="container">
+                <div className="row">            
+                    <Loading />
+                </div>
+            </div>
+        );
+    }
+
+    else if (props.leaders.errMess) {
+        return(
+            <div className="container">
+                <div className="row">            
+                    <h4>{props.leaders.errMess}</h4>
+                </div>
+            </div>
+        );
+    }
+
+    else 
     return(
         <div className="container">
             <div className="row">
